@@ -16,8 +16,9 @@ jobs:
   sonarqube:  # Moving this under 'jobs'
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli
+      - image: circleci/node:[TAG]  # Use Node.js image instead of SonarScanner image
     steps:
+      - run: npm install -g sonar-scanner  # Install the SonarQube scanner CLI
       - run: find .
       - attach_workspace:
           at: ~/workspace
