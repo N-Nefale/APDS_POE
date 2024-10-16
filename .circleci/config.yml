@@ -19,7 +19,7 @@ jobs:
     steps:
       - run:
           name: Install findutils
-          command: apk add --no-cache findutils  # Install find command
+          command: apt-get update && apt-get install -y findutils  # Install find command using apt-get
       - run: find .  # Now 'find' will work
       - attach_workspace:
           at: ~/workspace
