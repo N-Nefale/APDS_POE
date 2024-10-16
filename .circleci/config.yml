@@ -4,21 +4,13 @@ version: 2.1
 
 # Define jobs to be invoked later in a workflow.
 jobs:
-  say-hello:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-  sonarqube:  # Moving this under 'jobs'
+  sonarqube:
     working_directory: ~/build
     docker:
-      - image: circleci/node:20.18 # Use Node.js image instead of SonarScanner image
+      - image: node:20  # Use the official Node.js 20 image
     steps:
       - run: npm install -g sonar-scanner  # Install the SonarQube scanner CLI
+      - run: npm -v  # Display the npm version
       - run: find .
       - attach_workspace:
           at: ~/workspace
@@ -34,10 +26,3 @@ jobs:
           -Dsonar.login="$SONAR_TOKEN" \
           -Dsonar.branch.name="$SONAR_BRANCH" \
           -Dsonar.sources="."
-
-# Orchestrate jobs using workflows
-workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
-      - sonarqube
