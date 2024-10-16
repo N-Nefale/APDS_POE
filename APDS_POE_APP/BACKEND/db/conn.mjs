@@ -18,6 +18,6 @@ try{
     console.error(e);
 }
 
-let db = client.db("users");
+let db = client.db("swiftDB");
 
 export default db;
