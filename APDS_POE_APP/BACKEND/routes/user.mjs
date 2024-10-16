@@ -11,8 +11,8 @@ var store = new ExpressBrute.MemoryStore();
 var bruteforce = new ExpressBrute(store);
 
 // Regex patterns for input validation
-const nameRegex = /^[a-zA-Z\s-]+$/;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+const nameRegex = /^[a-zA-Z\s-]+$/;                                    //protects from cross-site-scripting attacks
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; //protects from SQL / NoSql Injection and also whitlisting input 
 
 //signup
 router.post("/signup", async (req, res) => {
@@ -73,7 +73,7 @@ router.post("/login", bruteforce.prevent, async (req, res) => {
             const token = jwt.sign(
                 { Username: user.name },
                 "this_secret_should_be_longer_than_it_is",
-                { expiresIn: "1h" }
+                { expiresIn: "1h" } //Session Timeout for session jacking
             );
             res.status(200).json({
                 message: "Authentication successful",
