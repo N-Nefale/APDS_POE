@@ -26,12 +26,12 @@ sonarqube:
   working_directory: ~/build
   docker:
     - image: sonarsource/sonar-scanner-cli
-    resource_class: small
-    steps:
-      - run: find .
-      - attach_workspace:
+      resource_class: small
+  steps:
+    - run: find .
+    - attach_workspace:
         at: ~/workspace
-      - run: |
+    - run: |
         SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
         echo "Sonar branch value is: " $SONAR_BRANCH
         echo "Sonar org value is : "$SONAR_ORG
@@ -39,10 +39,11 @@ sonarqube:
         -Dsonar.projectKey="SONAR_PROJECT_KEY" \
         -Dsonar.organization="SONAR_ORG" \
         -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.exclusion="**/android/**,**/ios/**" \
+        -Dsonar.exclusions="**/android/**,**/ios/**" \
         -Dsonar.login="$SONAR_TOKEN" \
         -Dsonar.branch.name="$SONAR_BRANCH" \
-        -Dsonar.sources="." \
+        -Dsonar.sources="."
+
         
 
 # Orchestrate jobs using workflows
