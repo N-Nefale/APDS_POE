@@ -6,7 +6,7 @@ import express from "express";
 import cors from "cors";
 import rateLimit from 'express-rate-limit'; // Import rate limiting
 
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
 
 const options = {
