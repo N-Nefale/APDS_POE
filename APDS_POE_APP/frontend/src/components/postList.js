@@ -1,97 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import '../App.css';
+import https from "https";
+import fs from "fs";
+import posts from "./routes/post.mjs";
+import users from "./routes/user.mjs";
+import express from "express";
+import cors from "cors";
+import rateLimit from 'express-rate-limit';
+
+const PORT = 3000;
+const app = express();
+
+const options = {
+    key: fs.readFileSync('keys/privatekey.pem'), //Man in the middle attack protection
+    cert: fs.readFileSync('keys/certificate.pem')//Session jacking protection
+};
+
+//rate limiter for all routes
+//Protection from DDoS Attacks
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+});
+
+// Apply the rate limiter globally to all requests
+app.use(limiter);
 
 
-const Post = (props) => (
-    <tr>
-        <td>{props.post.user}</td>
-        <td>{props.post.content}</td>
+app.use(cors());
+app.use(express.json());
 
-        <td>{props.post.image && (
-            <img
-                src = {'data:image/Jpeg,base64,${props.post.image}'} //convert base64 string to image
-                alt = "Post Image"
-                style = {{maxWidth: '100px', maxHeight: '100px', objectFit: 'cover'}} //ensure the image fits within the size limits
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    // CSP
+    res.setHeader("Content-Security-Policy", "frame-ancestors 'self';"); //ClickJacking & Cross site scripting protection
+    // HTTP Strict Transport Security
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains'); // Man in the middle attack protection
+    next();
+})
 
-            />
-            )}
-        </td>
-        <td>
-            <button className = "btn btn-link"
-                onClick={() => {
-                    props.deletePost(props.post.id);
-                }}
-            >
-                Delete
-            </button>
-        </td>
-    </tr>
-);
+app.use("/post",posts);
+app.route("/post",posts);
+app.use("/user",users);
+app.route("/user",users);
 
-export default function PostList() {
-    const [post, setPosts] = useState([]);
-
-    //this method fetches posts from the database
-    useEffect(() => {
-        const response = await fetch('https://localhost:3001/post/');
-
-        if(!response.ok) {
-            const message = 'an error occured: ${response.statuseText}';
-            window.alert(message)
-            return;
-        }
-
-        const posts = await response.json();
-        setPosts(posts);
-    }
-
-    getPosts();
-
-    return;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*export default function PostList() {
-    return (
-        <body>
-            <div className="container">
-                <h3 className="header">APDS NOTICE BOARD</h3>
-                <table className="table table-striped" style={{ marginTop: 20 }}>
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Caption</th>
-                            <th>Image</th>
-                            <th>Action</th> {/* Added column for actions }
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </body>
-    );
-}
-*/
+let server = https.createServer(options,app)
+console.log(PORT)
+server.listen(PORT);
