@@ -1,49 +1,87 @@
-import https from "https";
-import fs from "fs";
-import posts from "./routes/post.mjs";
-import users from "./routes/user.mjs";
-import express from "express";
-import cors from "cors";
-import rateLimit from 'express-rate-limit';
+import React, { useEffect, useState } from "react";
+import '../App.css';
 
-const PORT = 3000;
-const app = express();
+const Post = (props) => (
+    <tr>
+        <td>{props.post.user}</td>
+        <td>{props.post.content}</td>
+        <td>
+            {props.post.image && (
+                <img
+                    src={`data:image/jpeg;base64, ${props.post.image}`} // Convert base64 string to image
+                    alt="Post Image"
+                    style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'cover' }} // Ensure the image fits within the size limits
+                />
+            )}
+        </td>
+        <td>
+            <button className="btn btn-link" onClick={() => props.deletePost(props.post._id)}>
+                Delete
+            </button>
+        </td>
+    </tr>
+);
 
-const options = {
-    key: fs.readFileSync('keys/privatekey.pem'), //Man in the middle attack protection
-    cert: fs.readFileSync('keys/certificate.pem')//Session jacking protection
-};
+export default function PostList() {
+    const [posts, setPosts] = useState([]);
 
-//rate limiter for all routes
-//Protection from DDoS Attacks
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-});
+    // This method fetches the posts from the database.
+    useEffect(() => {
+        async function getPosts() {
+            const response = await fetch('https://localhost:3001/post/');
 
-// Apply the rate limiter globally to all requests
-app.use(limiter);
+            if (!response.ok) {
+                const message = `An error occurred: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
 
+            const posts = await response.json();
+            setPosts(posts);
+        }
 
-app.use(cors());
-app.use(express.json());
+        getPosts();
+    }, [posts.length]);
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    // CSP
-    res.setHeader("Content-Security-Policy", "frame-ancestors 'self';"); //ClickJacking & Cross site scripting protection
-    // HTTP Strict Transport Security
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains'); // Man in the middle attack protection
-    next();
-})
+    // This method will delete a post
+    async function deletePost(id) {
+        const token = localStorage.getItem("jwt");
+        await fetch(`https://localhost:3001/post/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        });
 
-app.use("/post",posts);
-app.route("/post",posts);
-app.use("/user",users);
-app.route("/user",users);
+        const newPosts = posts.filter((el) => el._id !== id);
+        setPosts(newPosts);
+    }
 
-let server = https.createServer(options,app)
-console.log(PORT)
-server.listen(PORT);
+    // This method will map out the posts on the table
+    function renderPosts() {
+        return posts.map((post) => (
+            <Post
+                post={post}
+                deletePost={() => deletePost(post._id)}
+                key={post._id}
+            />
+        ));
+    }
+
+    return (
+        <div className="container">
+            <h3 className="header">APDS Notice Board</h3>
+            <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Caption</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>{renderPosts()}</tbody>
+            </table>
+        </div>
+    );
+}
