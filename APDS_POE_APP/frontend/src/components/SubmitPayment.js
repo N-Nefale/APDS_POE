@@ -30,7 +30,7 @@ function SubmitPayment() {
   };
 
   return (
-    <div>
+    <div className="SubmitPayment">
       <h2>Submit Payment</h2>
       <form onSubmit={handleSubmitPayment}>
         <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} required />

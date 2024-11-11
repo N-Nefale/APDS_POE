@@ -14,7 +14,7 @@ function PendingPayments() {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/pending-payments', {
+        const response = await axios.get('https://localhost:3001/user/pending-payments', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPendingPayments(response.data);
@@ -30,7 +30,7 @@ function PendingPayments() {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/approve-payment/${paymentId}`,
+        `https://localhost:3001/user/approve-payment/${paymentId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -41,13 +41,15 @@ function PendingPayments() {
   };
 
   return (
-    <div>
+    <div className="PendingPayments">
       <h2>Pending Payments</h2>
       {error && <p>{error}</p>}
       <ul>
         {pendingPayments.map((payment) => (
           <li key={payment._id}>
             <p>Amount: {payment.amount}</p>
+            <p>Currency: {payment.currency}</p>
+            <p>Status: {payment.status}</p>
             <button onClick={() => handleApprovePayment(payment._id)}>Approve</button>
           </li>
         ))}

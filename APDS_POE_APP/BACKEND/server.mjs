@@ -4,14 +4,14 @@ import posts from "./routes/post.mjs";
 import users from "./routes/user.mjs";
 import express from "express";
 import cors from "cors";
-import rateLimit from 'express-rate-limit'; 
+import rateLimit from 'express-rate-limit';
 
 const PORT = 3001;
 const app = express();
 
 const options = {
-    key: fs.readFileSync('keys/privatekey.pem'),    //Man in the middle attack protection
-    cert: fs.readFileSync('keys/certificate.pem')   //Session jacking protection
+    key: fs.readFileSync('keys/privatekey.pem'), //Man in the middle attack protection
+    cert: fs.readFileSync('keys/certificate.pem')//Session jacking protection
 };
 
 //rate limiter for all routes
@@ -24,6 +24,7 @@ const limiter = rateLimit({
 // Apply the rate limiter globally to all requests
 app.use(limiter);
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -34,15 +35,16 @@ app.use((req, res, next) => {
     // CSP
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self';"); //ClickJacking & Cross site scripting protection
     // HTTP Strict Transport Security
+
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains'); // Man in the middle attack protection
     next();
-});
+})
 
-app.use("/post", posts);
-app.route("/post", posts);
-app.use("/user", users);
-app.route("/user", users);
+app.use("/post",posts);
+app.route("/post",posts);
+app.use("/user",users);
+app.route("/user",users);
 
-let server = https.createServer(options, app);
-console.log(PORT);
+let server = https.createServer(options,app)
+console.log(PORT)
 server.listen(PORT);

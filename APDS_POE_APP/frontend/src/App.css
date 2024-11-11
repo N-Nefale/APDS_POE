@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body {
+  margin: 0;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +40,260 @@
     transform: rotate(360deg);
   }
 }
+
+/* SubmitPayment Component Styles */
+.SubmitPayment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.SubmitPayment h2 {
+  margin-bottom: 20px;
+}
+
+.SubmitPayment form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.SubmitPayment form input,
+.SubmitPayment form button {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.SubmitPayment form button {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.SubmitPayment form button:hover {
+  background-color: #21a1f1;
+}
+
+.SubmitPayment p {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Navbar Component Styles */
+.navbar {
+  background-color: white;
+}
+
+.navbar .navbar-brand img {
+  width: 30px;
+}
+
+.navbar .nav-link {
+  color: black;
+  margin-right: 15px;
+  text-transform: uppercase;
+}
+
+.navbar .nav-link:hover {
+  color: #61dafb;
+}
+
+/* PendingPayments Component Styles */
+.PendingPayments {
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.PendingPayments h2 {
+  margin-bottom: 20px;
+}
+
+.PendingPayments p {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.PendingPayments ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.PendingPayments li {
+  background-color: #f1f1f1;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PendingPayments button {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.PendingPayments button:hover {
+  background-color: #21a1f1;
+}
+
+/* Login Component Styles */
+.Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.Login h2 {
+  margin-bottom: 20px;
+}
+
+.Login form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.Login form input,
+.Login form button {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.Login form button {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.Login form button:hover {
+  background-color: #21a1f1;
+}
+
+.Login p {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* HomeScreen.css */
+
+/* General styling for the landing page */
+.landing-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: #282c34;
+  color: white;
+  padding: 50px 0;
+}
+
+.hero-text {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.site-title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.hero-subtext {
+  font-size: 1.2rem;
+  margin: 10px 0 20px;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #61dafb;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  background-color: #21a1f1;
+}
+
+/* Features Section */
+.features-section {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.features-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  text-align: left;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  color: #61dafb;
+  margin-top: 0;
+}
+
+.feature-card p {
+  color: #666;
+}
+
+/* Quick Links Section */
+.quick-links-section {
+  padding: 50px 0;
+  background-color: #282c34;
+  color: white;
+}
+
+.quick-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.link-item {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.link-item:hover {
+  color: #21a1f1;
+}
+

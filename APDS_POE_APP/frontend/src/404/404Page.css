@@ -1,0 +1,36 @@
+.error-container {
+    text-align: center;
+    margin: 10% auto;
+    padding: 20px;
+    border: 2px solid #007BFF; /* Blue border accent */
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 255, 0.2);
+}
+
+.error-title {
+    font-size: 100px;
+    color: #007BFF; /* Blue text accent */
+    margin: 0;
+}
+
+.error-message {
+    font-size: 20px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.home-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #007BFF; /* Blue background */
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.home-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
