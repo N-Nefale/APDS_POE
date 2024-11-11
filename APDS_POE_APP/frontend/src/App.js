@@ -1,31 +1,21 @@
-import React from "react";
+// App.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Login from './components/login';
+import Signup from './components/signup';
+import SubmitPayment from './components/SubmitPayment';
+import PendingPayments from './components/PendingPayments';
 
-import './App.css';
-
-// We use Route in order to define the different routes of our application
-import { Route, Routes } from "react-router-dom";
-
-// We import all the components we need in our app
-import Navbar from "./components/navbar";
-import Postlist from "./components/postList";
-import EditPost from "./components/postEdit";
-import CreatePost from "./components/postCreate";
-import Register from "./components/register";
-import Login from "./components/login";
-
-const App = () => {
+function App() {
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Postlist />} />
-        <Route path="/edit/:id" element={<EditPost />} />
-        <Route path="/create" element={<CreatePost />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/submit-payment" element={<SubmitPayment />} />
+      <Route path="/pending-payments" element={<PendingPayments />} />
+      <Route path="/" element={<Login />} />
+    </Routes>
   );
-};
+}
 
 export default App;
