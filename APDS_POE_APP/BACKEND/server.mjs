@@ -4,7 +4,7 @@ import posts from "./routes/post.mjs";
 import users from "./routes/user.mjs";
 import express from "express";
 import cors from "cors";
-import rateLimit from 'express-rate-limit'; // Import rate limiting
+import rateLimit from 'express-rate-limit'; 
 
 const PORT = 3001;
 const app = express();
