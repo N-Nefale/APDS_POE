@@ -297,3 +297,59 @@ body {
   color: #21a1f1;
 }
 
+/* ApprovedPayments Component Styles */
+.ApprovedPayments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.ApprovedPayments h2 {
+  color: #282c34;
+  margin-bottom: 20px;
+}
+
+.ApprovedPayments p {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.ApprovedPayments table {
+  width: 90%;
+  max-width: 800px;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.ApprovedPayments th,
+.ApprovedPayments td {
+  padding: 12px;
+  text-align: left;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.ApprovedPayments th {
+  background-color: #282c34;
+  color: white;
+  font-weight: normal;
+}
+
+.ApprovedPayments tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.ApprovedPayments td {
+  color: #666;
+}
+
+.ApprovedPayments .no-payments {
+  color: #666;
+  font-size: 16px;
+  margin-top: 20px;
+}

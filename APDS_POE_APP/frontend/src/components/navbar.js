@@ -4,6 +4,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
+  // Assuming user data (like role) is stored in localStorage or context
+  const user = JSON.parse(localStorage.getItem("user")); // Example of retrieving user data
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +25,13 @@ export default function Navbar() {
                 Pending Payments
               </NavLink>
             </li>
-
+            {user?.role === "staff" && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/approved-payments">
+                  Approved Payments
+                </NavLink>
+              </li>
+            )}
             <li className="nav-item">
               <NavLink className="nav-link" to="/login">
                 Login

@@ -8,6 +8,7 @@ import PendingPayments from './components/PendingPayments';
 import Navbar from './components/navbar';
 import E404 from './404/E404'
 import HomePage from './components/HomePage'
+import ApprovedPayments from './components/ApprovedPayments';
 import './App.css'
 
 
@@ -23,7 +24,7 @@ function App() {
       <Route path="/pending-payments" element={<PendingPayments />} />
       <Route path="/*" element={<Navigate to={'/404'}  />} />
       <Route path="/404" element={<E404 />} />
-
+      <Route path="/approved-payments" element={<ApprovedPayments />} />
 
     </Routes>
     </>

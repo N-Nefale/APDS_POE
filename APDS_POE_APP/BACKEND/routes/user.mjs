@@ -201,4 +201,20 @@ router.get("/pending-payments", authenticateToken, async (req, res) => {
     }
 });
 
+// Staff retrieves all approved payments
+router.get("/approved-payments", authenticateToken, async (req, res) => {
+    if (req.user.role !== "staff") {
+        return res.status(401).json({ message: "Access denied" });
+    }
+
+    try {
+        let collection = await db.collection("payments");
+        const approvedPayments = await collection.find({ status: "approved" }).toArray();
+        res.status(200).json(approvedPayments);
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving approved payments", error });
+    }
+});
+
+
 export default router;
