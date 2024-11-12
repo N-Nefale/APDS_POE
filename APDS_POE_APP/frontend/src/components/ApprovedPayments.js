@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ApprovedPayments.css"; // Ensure this CSS file is imported
+
 
 export default function ApprovedPayments() {
   const [approvedPayments, setApprovedPayments] = useState([]);
