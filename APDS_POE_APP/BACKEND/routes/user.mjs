@@ -209,8 +209,13 @@ router.get("/approved-payments", authenticateToken, async (req, res) => {
 
     try {
         let collection = await db.collection("payments");
+        let message = 'Payments Found';
         const approvedPayments = await collection.find({ status: "approved" }).toArray();
-        res.status(200).json(approvedPayments);
+        if (approvedPayments === null) {
+            message = 'No Payments'
+            return res.status(404).json({message: message, approvedPayments: approvedPayments});
+        }
+        res.status(200).json({message: message, approvedPayments: approvedPayments});
     } catch (error) {
         res.status(500).json({ message: "Error retrieving approved payments", error });
     }

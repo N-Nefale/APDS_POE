@@ -25,13 +25,13 @@ export default function Navbar() {
                 Pending Payments
               </NavLink>
             </li>
-            {user?.role === "staff" && (
+           
               <li className="nav-item">
                 <NavLink className="nav-link" to="/approved-payments">
                   Approved Payments
                 </NavLink>
               </li>
-            )}
+            
             <li className="nav-item">
               <NavLink className="nav-link" to="/login">
                 Login

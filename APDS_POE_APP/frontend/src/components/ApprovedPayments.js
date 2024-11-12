@@ -11,12 +11,16 @@ export default function ApprovedPayments() {
     const fetchApprovedPayments = async () => {
       try {
         const token = localStorage.getItem("token"); // Example of retrieving JWT token
-        const response = await axios.get("http://localhost:3001/approved-payments", { // replace with your backend URL
+        const response = await axios.get("https://localhost:3001/user/approved-payments", { // replace with your backend URL
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        setApprovedPayments(response.data);
+        const  {message, approvedPayments}  = response.data
+        console.log(message);
+        console.log(approvedPayments);
+        
+        setApprovedPayments(approvedPayments);
       } catch (err) {
         setError("Error fetching approved payments.");
         console.error(err);
@@ -45,12 +49,12 @@ export default function ApprovedPayments() {
           <tbody>
             {approvedPayments.map((payment) => (
               <tr key={payment._id}>
-                <td>{payment.amount.$numberInt || payment.amount}</td> {/* Handles MongoDB specific formatting */}
+                <td>{payment.amount}</td> {/* Handles MongoDB specific formatting */}
                 <td>{payment.currency}</td>
                 <td>{payment.provider}</td>
                 <td>{payment.accountInfo}</td>
                 <td>{payment.swiftCode}</td>
-                <td>{new Date(parseInt(payment.approvedAt.$date.$numberLong)).toLocaleString()}</td> {/* Formats MongoDB date */}
+                <td>{new Date(parseInt(payment.approvedAt)).toLocaleString()}</td> {/* Formats MongoDB date */}
               </tr>
             ))}
           </tbody>
